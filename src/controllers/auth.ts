@@ -1,5 +1,27 @@
-import { Request, Response } from "express";
+/** @format */
 
-export const login = (req:Request, res:Response) => {
-    res.send('Login works');
-}
+import { Request, Response } from "express";
+import { prismaClient } from "..";
+import { hashSync } from "bcrypt";
+
+export const signUp = async (req: Request, res: Response) => {
+  const { email, password, name } = req.body;
+
+  let user = await prismaClient.user.findFirst({ where: { email } });
+  if (user) {
+    throw Error("User already exists");
+  }
+
+  user = await prismaClient.user.create({
+    data: {
+      email,
+      password: hashSync(password, 10),
+      name,
+    },
+  });
+  res.json({user})
+};
+
+export const login = (req: Request, res: Response) => {
+  res.send("Login works");
+};
