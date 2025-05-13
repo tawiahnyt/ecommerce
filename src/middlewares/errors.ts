@@ -1,13 +1,15 @@
 /** @format */
 
-import { Request, Response } from "express";
-import { HttpExceptions } from "../exceptions/root";
+import { NextFunction, Request, Response } from "express";
+import { HttpException } from "../exceptions/root";
 
 export const errorMiddleware = (
-  error: HttpExceptions,
+  error: HttpException,
   req: Request,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) => {
+  console.log('🚀🚀 ---> Error lmfao 💀')
   res
     .status(error.statusCode)
     .json({

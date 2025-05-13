@@ -1,10 +1,10 @@
 // message, status code, error codes, error
 
-export class HttpExceptions extends Error {
+export class HttpException extends Error {
     message: string;
-    errorCode: ErrorCode;
+    errorCode: any;
     statusCode: number;
-    errors: any
+    errors: ErrorCode
 
     constructor(
         message: string,

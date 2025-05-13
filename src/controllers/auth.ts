@@ -22,8 +22,7 @@ export const signUp = async (
 
     let user = await prismaClient.user.findFirst({ where: { email } });
     if (user) {
-      return next(
-        // Added return here
+      next(
         new BadRequestException(
           "User already exists!",
           ErrorCode.USER_ALREADY_EXISTS
@@ -58,7 +57,7 @@ export const login = async (req: Request, res: Response) => {
   let user = await prismaClient.user.findFirst({ where: { email } });
 
   if (!user) {
-    throw Error("User already exists");
+    throw Error("User does not exists");
   }
 
   if (!compareSync(password, user.password)) {
